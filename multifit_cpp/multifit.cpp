@@ -6,8 +6,8 @@
 //
 
 #include <iostream>
-#include "../interface/Pulse.h"
-#include "../interface/PulseChiSqSNNLS.h"
+#include "Pulse.h"
+#include "PulseChiSqSNNLS.h"
 
 #include "TF1.h"
 #include "TFile.h"

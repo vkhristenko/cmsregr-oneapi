@@ -33,7 +33,7 @@ const int IDSTART    = 150+13;
 const double TAU = 43.0;
 
 // filename with pulse shape
-const TString FNAMESHAPE       = "../data/EmptyFile.root";
+const TString FNAMESHAPE       = "data/EmptyFile.root";
 
 
 

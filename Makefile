@@ -1,8 +1,10 @@
-.PHONY: all gen clean multifit_cpp
+.PHONY: all clean gen multifit_cpp
 
 export ROOT_LIBS=$(shell root-config --libs)
 export ROOT_CXXFLAGS=$(shell root-config --cflags)
 export ROOT_LDFLAGS=$(shell root-config --ldflags)
+
+export EIGEN_HOME=/home/eigen
 
 all: gen multifit_cpp
 

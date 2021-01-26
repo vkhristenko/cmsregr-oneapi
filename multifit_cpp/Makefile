@@ -3,14 +3,21 @@
 CXX=g++
 CXXFLAGS=--std=c++17
 
-all: test
+HEADERS=$(shell ls *.h)
 
-test: test.o
-	$(CXX) $^ -o $@
+all: multifit
 
-%.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+multifit: multifit.o PulseChiSqSNNLS.o inplace_fnnls.o
+	@echo "----------------------------"
+	@echo "Building executable: $@"
+	@echo "----------------------------"
+	$(CXX) $^ $(LDFLAGS) $(ROOT_LDFLAGS) $(ROOT_LIBS) -o $@
+
+%.o: %.cpp $(HEADERS) 
+	@echo "----------------------------"
+	@echo "Compiling source file: $<"
+	@echo "----------------------------"
+	$(CXX) $(CXXFLAGS) $(ROOT_CXXFLAGS) -I$(EIGEN_HOME) -c $< -o $@
 
 clean:
-	@echo call make clean
-	rm test
+	rm *.o multifit
