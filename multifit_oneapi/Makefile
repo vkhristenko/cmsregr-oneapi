@@ -1,7 +1,8 @@
 .PHONY: all clean
 
-CXX=g++
-CXXFLAGS=--std=c++17 -O2
+GCC_HOME=$(shell which g++)/../../
+CXX=dpcpp
+CXXFLAGS=--std=c++17 --gcc-toolchain=$(GCC_HOME)
 
 HEADERS=$(shell ls *.h)
 
