@@ -1,0 +1,271 @@
+---
+MainSourceFile:  '/home/test-dpct/multifit_gpu/src/dpct_result/PulseChiSqSNNLS.h'
+Replacements:
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          53
+    Length:          0
+    ReplacementText: '#include <CL/sycl.hpp>
+#include <dpct/dpct.hpp>
+'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          143
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          152
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          193
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          202
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          275
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          284
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          495
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          504
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          581
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          590
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          661
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          670
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          735
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          744
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          811
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          820
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          884
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          893
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          946
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          955
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1044
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1053
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1165
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1174
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1200
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1209
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1322
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1331
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1367
+    Length:          9
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1376
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1739
+    Length:          11
+    ReplacementText: 'SYCL_EXTERNAL '
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/PulseChiSqSNNLS.h'
+    Offset:          1825
+    Length:          0
+    ReplacementText: ',
+                     sycl::nd_item<3> item_ct1'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+...

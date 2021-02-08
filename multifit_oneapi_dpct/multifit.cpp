@@ -1,23 +1,14 @@
-//
-// MultiFit amplitude reconstruction
-// To run:
-// > g++ -o Example06 Example06.cc PulseChiSqSNNLS.cc -std=c++11 `root-config
-// --cflags --glibs` > ./Example06
-//
-
+#include <chrono>
 #include <iostream>
+
 #include "Pulse.h"
-#include "PulseChiSqSNNLS.h"
+#include "PulseChiSqSNNLSWrapper.h"
 
 #include "TF1.h"
 #include "TFile.h"
 #include "TH2.h"
 #include "TProfile.h"
 #include "TTree.h"
-
-#ifdef PROFILE
-#include <ittnotify.h>
-#endif
 
 using namespace std;
 
@@ -47,13 +38,6 @@ void init(std::string const& out_file) {
   // intime sample is [2]
   double pulseShapeTemplate[NSAMPLES + 2];
   for (int i = 0; i < (NSAMPLES + 2); i++) {
-    //     iwf/4. - (500 / 2) + 25.
-    //     double x = double( IDSTART + NFREQ * (i + 3) - WFLENGTH / 2);
-    //     double x = double( IDSTART + NFREQ * (i + 3) - WFLENGTH / 2);
-    //     double x = double( IDSTART + NFREQ * (i + 3) - 500 / 2); //----> 500
-    //     ns is fixed! x = double( IDSTART + NFREQ * i + 3*25. - 500 / 2. );
-    //     //----> 500 ns is fixed!
-
     double x = double(IDSTART + NFREQ * (i + 3) + NFREQ -
                       500 / 2);  //----> 500 ns is fixed!
 
@@ -85,6 +69,9 @@ void init(std::string const& out_file) {
 void run(std::string inputFile,
          int max_iterations,
          int entries_per_kernel = 100) {
+  //
+  // initilaization: read the input and arrange root tree/branches
+  //
   TFile* file2 = new TFile(inputFile.c_str());
 
   std::vector<double>* samples = new std::vector<double>;
@@ -143,45 +130,13 @@ void run(std::string inputFile,
 
   v_amplitudes_reco.clear();
 
-  struct Args {
-    SampleVector samples;
-    SampleMatrix samplecor;
-    double pederr;
-    BXVector bxs;
-    FullSampleVector fullpulse;
-    FullSampleMatrix fullpulsecov;
-
-    Args(SampleVector const& samples,
-         SampleMatrix const& samplecor,
-         double pederr,
-         BXVector const& bxs,
-         FullSampleVector fullpulse,
-         FullSampleMatrix fullpulsecov)
-        : samples(samples),
-          samplecor(samplecor),
-          pederr(pederr),
-          bxs(bxs),
-          fullpulse(fullpulse),
-          fullpulsecov(fullpulsecov) {}
-  };
-
-  struct Output {
-    double chi2;
-    double ampl;
-    int status;
-    std::vector<double> v_amplitudes;
-    
-    Output(double chi2, double ampl, int status, std::vector<double> v_amplitudes) 
-    : chi2{chi2}, ampl{ampl}, status{status}, v_amplitudes{v_amplitudes}
-    {}
-    };
-
-  std::cout << "max_iterations: " << max_iterations << std::endl
-            << "entries_per_kernel: " << entries_per_kernel << std::endl;
+  std::cout << "entries: " << nentries << std::endl;
+  std::cout << "max_iterations: " << max_iterations << std::endl;
+  std::cout << "entries_per_kernel: " << entries_per_kernel << std::endl;
 
   for (auto it = 0; it < max_iterations; ++it) {
     // vector of input parameters to the kernel
-    std::vector<Args> vargs;
+    std::vector<DoFitArgs> vargs;
 
     for (int ie = 0; ie < entries_per_kernel; ++ie) {
       tree->GetEntry(ie % tree->GetEntries());
@@ -190,79 +145,64 @@ void run(std::string inputFile,
 
       double pedval = 0.;
       double pedrms = 1.0;
-      vargs.emplace_back(amplitudes, noisecor, pedrms, activeBX, fullpulse, fullpulsecov);
+      vargs.emplace_back(amplitudes, noisecor, pedrms, activeBX, fullpulse,
+                         fullpulsecov);
     }
 
-    auto kernel = [](std::vector<Args> const& vargs) -> std::vector<Output> {
-      std::vector<Output> vresults;
-      for (auto& args : vargs) {
-        PulseChiSqSNNLS func;
-        func.disableErrorCalculation();
-        auto status = func.DoFit(args.samples, args.samplecor, args.pederr,
-                                 args.bxs, args.fullpulse, args.fullpulsecov);
-        double chi2 = func.ChiSq();
-        unsigned int ip_in_time = 0;
-        for (unsigned int ip = 0; ip < func.BXs().rows(); ++ip) {
-          if (func.BXs().coeff(ip) == 0) {
-            ip_in_time = ip;
-            break;
-          }
-        }
-        double ampl = status ? func.X()[ip_in_time] : 0.;
-        
-        //---- save all reconstructed amplitudes
-        std::vector<double> v_ampl;
-        for (unsigned int ip=0; ip<func.BXs().rows(); ++ip) {
-          v_ampl.push_back(0.);
-        }
-        
-        for (unsigned int ip=0; ip<func.BXs().rows(); ++ip) {
-          v_ampl[ (int(func.BXs().coeff(ip))) + 5] = (func.X())[ ip ];
-        }
-        
-        vresults.emplace_back(chi2, ampl, status, v_ampl);
-      }
-
-      return vresults;
-    };
     std::cout << "iteration: " << it
               << " wrapper start with vargs.size() = " << vargs.size()
               << std::endl;
     auto start_time = std::chrono::high_resolution_clock::now();
-#ifdef PROFILE
-    __itt_resume();
-#endif
-    auto vresults = kernel(vargs);
-#ifdef PROFILE
-    __itt_pause();
-#endif
+    auto vresults = doFitWrapper(vargs);
     auto end_time = std::chrono::high_resolution_clock::now();
-    std::cout << "wrapper end with vresults.size() " << vresults.size()
+    std::cout << "wrapper end with vresults.size() = " << vresults.size()
               << std::endl;
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
                         end_time - start_time)
                         .count();
-    hDuration->Fill(duration);
+    if (it > 0)
+      hDuration->Fill(duration);
+    else
+      std::cout << "skipping first iteration" << std::endl;
     std::cout << "duration = " << duration << std::endl;
 
+  
     if (it == 0){
-      
       int ientry = 0;
       for (auto& results : vresults) {
         tree->GetEntry(ientry);
         
-        h01->Fill(results.ampl - amplitudeTruth);
-        hAmpl->Fill(results.ampl);
+        // std::cout << "status = " << results.status << std::endl;
+        // std::cout << "chi2 = " << results.chi2 << std::endl;
+        
+        // double aMax = status ? pulsefunc.X()[ipulseintime] : 0.;
+        double aMax = results.ampl;
+        // std::cout << "aMax = " << aMax << std::endl;
+        //std::cout << "amplitudeTruth = " << amplitudeTruth << std::endl;
+        h01->Fill(aMax - amplitudeTruth);
+        hAmpl->Fill(aMax);
+        
         //---- all reconstructed pulses
-        samplesReco = results.v_amplitudes;
+        //       samplesReco = results.v_amplitudes;
+        //---- save all reconstructed amplitudes
+        samplesReco.clear();
+        for (unsigned int ip=0; ip<results.BXs.rows(); ++ip) {
+          samplesReco.push_back(0.);
+        }
+        
+        for (unsigned int ip=0; ip<results.BXs.rows(); ++ip) {
+          samplesReco[ (int(results.BXs.coeff(ip))) + 5] = (results.X)[ ip ];
+        }
         
         newtree-> Fill();
         ientry++;  
+        
       }
     }
     
   }
 
+  // print some stats
   fout->cd();
   newtree->Write();
   std::cout << "  Mean of REC-MC = " << h01->GetMean() << " GeV" << std::endl;
@@ -280,23 +220,26 @@ void saveHist() {
 }
 
 int main(int argc, char** argv) {
+  // default input file
   std::string inputFile = "data/samples_signal_10GeV_pu_0.root";
+
+  // unwrap the cli args
   auto max_iterations = 10;
   auto entries_per_kernel = 100;
-  // #ifdef PROFILE
-  // __itt_pause();
-  // std::cout << "PROFILING PAUSED" << std::endl;
-  // #endif
-  if (argc >= 2) {
+  if (argc >= 2)
     inputFile = argv[1];
-  }
   if (argc >= 3)
     max_iterations = atoi(argv[2]);
   if (argc >= 4)
     entries_per_kernel = atoi(argv[3]);
 
-  std::string out_file = "output_cpu.root";
+  // output
+  std::string out_file = "output_gpu.root";
 
+  std::cout << "max_iterations = " << max_iterations
+            << "  entries_per_kernel = " << entries_per_kernel << std::endl;
+
+  // start
   std::cout << "1111" << std::endl;
   init(out_file);
   std::cout << "2222" << std::endl;
@@ -304,5 +247,9 @@ int main(int argc, char** argv) {
   std::cout << "3333" << std::endl;
   saveHist();
   std::cout << "4444" << std::endl;
+
+  //std::vector<DoFitArgs> v;
+  //auto tmp = doFitWrapper(v);
+
   return 0;
 }

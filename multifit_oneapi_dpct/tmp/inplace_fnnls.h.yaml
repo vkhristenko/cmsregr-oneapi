@@ -1,0 +1,38 @@
+---
+MainSourceFile:  '/home/test-dpct/multifit_gpu/src/dpct_result/inplace_fnnls.h'
+Replacements:
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/inplace_fnnls.h'
+    Offset:          51
+    Length:          0
+    ReplacementText: '#include <CL/sycl.hpp>
+#include <dpct/dpct.hpp>
+'
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/inplace_fnnls.h'
+    Offset:          83
+    Length:          13
+    ReplacementText: DPCT_COMPATIBILITY_TEMP
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/inplace_fnnls.h'
+    Offset:          97
+    Length:          11
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+  - FilePath:        '/home/test-dpct/multifit_gpu/src/inplace_fnnls.h'
+    Offset:          108
+    Length:          8
+    ReplacementText: ''
+    ConstantFlag:    ''
+    ConstantOffset:  0
+    InitStr:         ''
+    NewHostVarName:  ''
+...
